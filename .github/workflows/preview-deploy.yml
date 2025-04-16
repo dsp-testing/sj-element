@@ -30,8 +30,10 @@ jobs:
 
       - name: upload surge service
         id: deploy
+        env:
+          PR_ID: ${{ steps.pr.outputs.id }}
         run: |
-          export DEPLOY_DOMAIN=https://preview-pr-${{ steps.pr.outputs.id }}-element-ui.surge.sh
+          export DEPLOY_DOMAIN=https://preview-pr-$PR_ID-element-ui.surge.sh
           npx surge --project ./ --domain $DEPLOY_DOMAIN --token ${{ secrets.SURGE_TOKEN }}
 
       - name: update status comment
